@@ -26,7 +26,7 @@ class GroupScreen extends Component {
   state = {}
 
   selectGroup = (gameTitle, img_url) => () => {
-    this.props.navigation.navigate('Game', { title: gameTitle, img_url });
+    this.props.navigation.navigate('GameChatRoom', { title: gameTitle, img_url });
   }
 
   render() {
