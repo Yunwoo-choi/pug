@@ -11,7 +11,6 @@ import {
 } from '../../config/info';
 
 import { View, Text } from 'react-native';
-
 export default class GameScreen extends React.Component {
   state = {
     messages: []
@@ -29,7 +28,7 @@ export default class GameScreen extends React.Component {
     const tokenProvider = new Chatkit.TokenProvider({
       url: CHATKIT_TOKEN_PROVIDER_ENDPOINT
     });
-
+    console.log(this.props.navigation.state.params.CHAT_ROOM_ID)
     // This will instantiate a `chatManager` object. This object can be used to subscribe to any number of rooms and users and corresponding messages.
     // For the purpose of this example we will use single room-user pair.
     const chatManager = new Chatkit.ChatManager({
@@ -42,7 +41,7 @@ export default class GameScreen extends React.Component {
     chatManager.connect().then(currentUser => {
       this.currentUser = currentUser;
       this.currentUser.subscribeToRoom({
-        roomId: CHATKIT_ROOM_ID,
+        roomId: this.props.navigation.state.params.CHAT_ROOM_ID,
         hooks: {
           onNewMessage: this.onReceive
         }
@@ -53,7 +52,7 @@ export default class GameScreen extends React.Component {
   onSend([message]) {
     this.currentUser.sendMessage({
       text: message.text,
-      roomId: CHATKIT_ROOM_ID
+      roomId: this.props.navigation.state.params.CHAT_ROOM_ID
     });
   }
 

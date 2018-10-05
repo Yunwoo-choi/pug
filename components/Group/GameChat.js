@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native'
+import { Text, View, Button, TouchableOpacity } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 
 import { List, ListItem } from 'react-native-elements';
 const list = [
@@ -23,7 +24,6 @@ const list = [
 
 class GameChat extends Component {
   state = {
-      ChatRoomId: '',
       currentRoomID: '',
       list: [
         {
@@ -49,11 +49,21 @@ class GameChat extends Component {
       ]
   }
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('title', 'A Nested Details Screen'),
+      headerRight: 
+        <Ionicons name='md-add' size={35} style = {{marginRight: 10, justifyContent: 'center', alignItems: 'center'}}/>
+    };
+  };
+
+
   selectGroup = (gameTitle, img_url, ID) => () => {
       this.setState({
-          currenRoomID: ID
-      })
-    this.props.navigation.navigate('Game', { title: gameTitle, img_url });
+          currentRoomID: ID
+      },
+      () => this.props.navigation.navigate('Game', { title: gameTitle, img_url, CHAT_ROOM_ID: this.state.currentRoomID })
+      )
   }
 
   render() {
